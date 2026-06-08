@@ -31,6 +31,7 @@ import { Confetti } from '@/components/Confetti';
 import { OnTheClockTimer } from '@/components/draft/OnTheClockTimer';
 import { PickAnnouncement } from '@/components/draft/PickAnnouncement';
 import { DraftStatsCard } from '@/components/draft/DraftStatsCard';
+import { DraftHighlightReel } from '@/components/draft/DraftHighlightReel';
 import { findMvpPick, findScoringStreaks, computePickTimings, formatDuration } from '@/lib/draftStats';
 import { useCountUp, useFirstSeen } from '@/lib/draft/animations';
 import {
@@ -1577,6 +1578,11 @@ export default function DraftDetailPage() {
             </div>
           ) : hasResults ? (
             <div className="mb-5">
+              {/* Auto-narrated highlight reel — three sports-column-style
+                  lines built from the same stats the chip grid shows.
+                  Keeps the report opening with personality. */}
+              <DraftHighlightReel picks={picks} results={draftResults} participants={participants} />
+
               {/* Trophy Podium */}
               <div className="glass-card p-4 mb-4">
                 <div className="flex items-center justify-center gap-1 mb-3">

@@ -299,7 +299,9 @@ function StandingsCard({ standings, userId }: { standings: SeasonStanding[]; use
                 </button>
                 {isExpanded && (
                   <div className="px-4 pb-3 pt-0">
-                    <div className="grid grid-cols-4 gap-px rounded-lg overflow-hidden bg-border/10">
+                    {/* 2×2 on phones — 4 stats at 12px+ are too cramped at 1×4 on
+                        narrow screens. Desktop keeps the original single-row layout. */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-lg overflow-hidden bg-border/10">
                       {[
                         { v: s.avg_finish.toFixed(1), l: 'Avg Finish' },
                         { v: s.avg_score.toFixed(1), l: 'Avg Score' },
@@ -307,8 +309,8 @@ function StandingsCard({ standings, userId }: { standings: SeasonStanding[]; use
                         { v: s.worst_score.toFixed(1), l: 'Worst', cls: 'text-destructive' },
                       ].map(stat => (
                         <div key={stat.l} className="text-center bg-muted/30 p-2.5">
-                          <p className={cn('text-[12px] font-bold tabular-nums', stat.cls)}>{stat.v}</p>
-                          <p className="text-[7px] text-muted-foreground/60 font-bold uppercase tracking-wider">{stat.l}</p>
+                          <p className={cn('text-[13px] sm:text-[12px] font-bold tabular-nums', stat.cls)}>{stat.v}</p>
+                          <p className="text-[8px] sm:text-[7px] text-muted-foreground/60 font-bold uppercase tracking-wider">{stat.l}</p>
                         </div>
                       ))}
                     </div>
@@ -540,7 +542,9 @@ function PlayoffPicture({ standings, matches, seasonId }: { standings: SeasonSta
         )}
         {matches.length > 0 ? (
           <>
-            <div className="grid grid-cols-3 gap-2">
+            {/* Phones: stack rounds vertically so team names don't overflow tiny
+                columns. sm+ goes back to the original 3-column bracket. */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2">
               <div className="space-y-2">
                 <p className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground/50 text-center">Play-In</p>
                 <MatchCard m={qfMatches[0]} placeholder={{ roundLabel: 'Play-In' }} />
@@ -576,12 +580,12 @@ function PlayoffPicture({ standings, matches, seasonId }: { standings: SeasonSta
           </>
         ) : (
           <div className="space-y-3">
-            <div className="grid grid-cols-3 gap-2 mb-3">
+            <div className="hidden sm:grid sm:grid-cols-3 gap-2 mb-3">
               {['Play-In', 'Semis', 'Finals'].map(r => (
                 <div key={r} className="text-center"><span className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground/50">{r}</span></div>
               ))}
             </div>
-            <div className="grid grid-cols-3 gap-2 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
               <div className="rounded-lg bg-muted/30 p-2.5 border border-border/10">
                 <p className="text-[10px] font-bold">#{4} <span className="text-muted-foreground font-normal">{getName(4)}</span></p>
                 <p className="text-[10px] font-bold mt-1">#{5} <span className="text-muted-foreground font-normal">{getName(5)}</span></p>
@@ -602,7 +606,7 @@ function PlayoffPicture({ standings, matches, seasonId }: { standings: SeasonSta
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-2 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center">
               <div />
               <div className="rounded-lg bg-muted/30 p-2.5 border border-border/10">
                 <p className="text-[10px] font-bold">#{2} <span className="text-muted-foreground font-normal">{getName(2)}</span></p>
@@ -1261,7 +1265,7 @@ export default function DraftsListPage() {
         <TabsContent value="drafts" className="mt-0">
           {myDraftStats.draftsRated > 0 && (
             <div className="da-glass p-4 mb-4">
-              <div className="grid grid-cols-3 gap-2 mb-3">
+              <div className="hidden sm:grid sm:grid-cols-3 gap-2 mb-3">
                 {[
                   { v: myDraftStats.totalPoints, l: 'Total Pts' },
                   { v: myDraftStats.wins, l: 'Wins' },

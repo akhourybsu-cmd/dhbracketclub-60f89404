@@ -1601,9 +1601,11 @@ export default function DraftDetailPage() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: rIdx * 0.15 }}
-                          className="flex flex-col items-center flex-1 max-w-[100px]"
+                          className="flex flex-col items-center flex-1 min-w-0 max-w-[140px] sm:max-w-[160px]"
                         >
-                          <div className="text-[10px] font-bold mb-1 truncate w-full text-center">
+                          {/* Two-line clamp so narrow phones don't truncate names mid-word.
+                              Stretches to 140-160px on roomier screens. */}
+                          <div className="text-[10px] sm:text-[11px] font-bold mb-1 w-full text-center leading-tight break-words line-clamp-2 px-0.5">
                             {p?.profiles?.display_name || 'Unknown'}
                           </div>
                           <div
